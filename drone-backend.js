@@ -36,29 +36,39 @@ Cylon.robot()
 function fly(robot) {
 
 }
-// Starts Cylon, to communicate with the drone
-Cylon.start();
 
-// declares new variable "bot"
+// declares new global  variable "bot" - placeholder for properties of the drone device
 var bot;
+
 /// Fly the bot
 
 // Robot is the drone we control
 function fly(robot) {
-    bot = robot
+    // initialise global variable "bot" to argument "robot" of function fly()
+    bot = robot;
     // disable emergency before starting
-    bot.drone.disableEmergency();
+    robot.drone.disableEmergency();
     // tell drone it is lying flat on ground
-    bot.drone.ftrim;
+    robot.drone.ftrim;
     // take off
-    bot.drone.takeoff();
-    // land after 10 seconds
-    after(10*1000, function() {
-        bot.drone.land();
+    robot.drone.takeoff();
+    //2 seconds after .takeoff
+    after(2*1000, function(){
+        //argument takes a number from 0 to 1 to indicate power
+        bot.drone.up(0.1)
+
+    })
+    //2 seconds after 1st instance of after
+    after(2*1000, function(){
         bot.drone.land();
     });
-    after(15*1000, function() {
-        bot.drone.stop();
+    after()
+    //// land after 10 seconds
+    //after(10*1000, function() {
+    //    robot.drone.land();
+    //});
+    //after(15*1000, function() {
+    //    robot.drone.stop();
     });
 }
 
@@ -68,6 +78,9 @@ function fly(robot) {
 bot.nav.on("navdata", function(data){
     console.log(data);
 });
+
+// Starts Cylon, to communicate with the drone
+Cylon.start();
 
 
 
